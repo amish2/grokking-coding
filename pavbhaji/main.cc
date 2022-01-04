@@ -34,25 +34,70 @@ typedef multiset<int> mseti;
 
 //***********************CODE GOES BELOW************************
 
-int RWT(vector<int> v)
+int larg_subar_sum(vector<int> arr, int k)
 {
-    vector<int> maxL(v.size()), maxR(v.size());
+    int i=0,j=0;
+    int sum = 0;
+    int mx = INT_MIN;
 
-    maxL[0] = v[0];
-    for(int i=1; i<v.size(); i++)
+    while (j<arr.size())
     {
-        if(maxL[i-1] < v[i])
-            maxL[i] = v[i];
+        sum+=arr[j];
+        if(sum < k)
+            j++;
+        else if(sum == k)
+        {
+            mx = max(mx, j-i+1);
+            j++;    // to find next candidates for max ans
+        }
         else
-            maxL[i] = maxL[i-1];
+        {
+            while (sum>k)
+            {
+                sum-=arr[i];
+                i++;
+            }
+            j++;
+        }
     }
-    
+    return mx;
+} 
 
-}
-
-void solve()
+int lrgst_uniq_substr(string s)
 {
-    
+    int n = s.size();
+    int i=0, j=0;
+    int ans = INT_MIN;
+    map<char, int> mp;
+
+
+    while (j<n)
+    {
+        mp[s[j]]++;
+
+        if(mp.size() > (j-i+1))
+            j++;
+
+        else if(mp.size() == (j-i+1))
+        {
+            ans = max(ans, j-i+1);
+            j++;    
+        }
+        else
+        {
+            while (mp.size() < (j-i+1))
+            {
+                mp[s[i]]--;
+                if(mp[s[i]] == 0)
+                {
+                    mp.erase(s[i]);
+                }
+                i++;
+            }
+            j++;
+        }
+    }
+    return ans;
 }
 
 int main()
@@ -61,18 +106,16 @@ int main()
     // #ifdef AMISH_DEBUG
     cin.tie(NULL);
     // #endif
-    
-    #ifndef ONLINE_JUDGE
-    freopen("input.txt","r",stdin);
-    freopen("output.txt","w",stdout);
-    #endif
-    
-    int tc=1;
-    cin>>tc;
-    while(tc--)
-    {
-        solve();
-        cout<<"\n";
-    }
+
+    int n = 7;
+    // vi b = {12, -1, -7, 8, -15, 30, 16, 28};
+    vi b = {4,1,1,1,2,3,5};
+    // int k = 5;
+    int k = 3;
+    string s = "pwwkew";
+    // int ans = larg_subar_sum(b,k);
+    cout<<"doing\n";
+    int ans = lrgst_uniq_substr(s);
+    cout<<ans;
     return 0;
 }
