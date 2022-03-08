@@ -635,6 +635,9 @@ Therefore we need to find maxR and maxL for each of the element in the array. **
 
 ```
 
+--------------------------------
+# **...LAST 3 PARTS are PENDING...**
+
 
 ----------------------
 Author : [Amish Saxena](github.com/amishsaxena)
